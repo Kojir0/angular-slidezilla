@@ -1,8 +1,7 @@
 {
     "name": "angular-slidezilla",
     "main": [
-        "dist/angular-slidezilla.min.js",
-        "dist/angular-slidezilla.min.js.map",
+        "src/angular-slidezilla.js",
         "src/angular-slidezilla.css"
     ],
     "ignore": [
