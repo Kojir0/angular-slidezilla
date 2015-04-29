@@ -38,6 +38,13 @@ angular.module('angular-slidezilla', [])
         require: ['ngModel'],
         controller: 'AngularSlidezillaController',
         link: function (scope, element, attrs, ctrls) {
+
+          scope.handleStyle = {'background-color':scope.handleColor, left: 0};
+          var unbind = scope.$watch('handleColor', function(){
+            scope.handleStyle['background-color'] = scope.handleColor;
+          });
+          scope.$on('$destroy', unbind);
+
           //process attributes and watch for changes
           if (attrs.min) {
             scope.min = scope.$parent.$eval(attrs.min);
@@ -79,8 +86,7 @@ angular.module('angular-slidezilla', [])
             //update display to match model value
             hPos1 = 0;
             hPos2 = 100 / (scope.max - scope.min) * (scope.model - scope.max) + 100;
-            angular.element(handles[0]).css('left', hPos2 + '%');
-            angular.element(handles[0]).css('background-color', scope.handleColor);
+            scope.handleStyle.left = hPos2 + '%';
             angular.element(selection).css('left', hPos1 + '%').css('width', (hPos2 - hPos1 + 1) + '%');
           };
 
@@ -174,18 +180,18 @@ angular.module('angular-slidezilla', [])
 
           ctrls[0].$render();
         },
-        template: '<div style="display: table;">'
-        + '<div style="display:table-cell;">{{min}}</div>'
-        + '<div style="display:table-cell;min-width:20px;"></div>'
-        + '<div style="display:table-cell;" class="slider slider-horizontal">'
+        template: '<div class="slider-container">'
+          //+ '<div class="slider-cell">{{min}}</div>'
+        + '<div class="slider-cell slider-spacer-left"></div>'
+        + '<div class="slider-cell slider slider-horizontal">'
         + '<div class="slider-track">'
         + '<div class="slider-selection"></div>'
-        + '<div class="slider-handle">{{model}}</div>'
+        + '<div ng-style="handleStyle" class="slider-handle">{{model}}</div>'
         + '</div>'
-        + '<input type="text" class="slider"/>'
         + '</div>'
-        + '<div style="display:table-cell;min-width:20px;"></div>'
-        + '<div style="display:table-cell;">{{max}}</div>'
+        + '<div style="min-width:{{10 * max.toString().length}}px;" class="slider-cell"></div>'
+          //+ '<div class="slider-cell">{{max}}</div>'
+          //+ '<input type="text"ng-model="model" class="form-control slider-cell slider-input"/>'
         + '</div>',
         replace: true
       };

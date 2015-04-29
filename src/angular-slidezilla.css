@@ -1,5 +1,16 @@
+.slider-container {
+  display: table;
+}
+
+.slider-cell {
+  display: table-cell;
+}
+
+.slider-spacer-left {
+  min-width: 10px;
+}
+
 .slider {
-  display: inline-block;
   vertical-align: middle;
   position: relative;
 }
@@ -61,8 +72,8 @@
   margin-top: -10px;
 }
 
-.slider input {
-  display: none;
+.slider-input {
+  /*display: none;*/
 }
 
 .slider-track {
