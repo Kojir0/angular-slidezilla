@@ -171,6 +171,9 @@ angular.module('angular-slidezilla', [])
 
           //clamps model values. Keeps sliders within track and keeps them in index order
           function clampModelValue() {
+            if (!scope.model || !isFinite(scope.model)){
+              scope.model = 0;
+            }
             if (scope.model > scope.max) {
               scope.model = scope.max;
             } else if (scope.model < scope.min) {
